@@ -1,0 +1,64 @@
+{
+  "name": "productivity-tracker",
+  "version": "1.0.0",
+  "description": "A comprehensive Chrome extension for productivity management with MERN stack backend",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm run install-backend && npm run install-dashboard",
+    "install-backend": "cd backend && npm install",
+    "install-dashboard": "cd dashboard && npm install",
+    "start": "concurrently \"npm run start-backend\" \"npm run start-dashboard\"",
+    "start-backend": "cd backend && npm run dev",
+    "start-dashboard": "cd dashboard && npm start",
+    "build": "npm run build-backend && npm run build-dashboard",
+    "build-backend": "cd backend && npm run build",
+    "build-dashboard": "cd dashboard && npm run build",
+    "test": "npm run test-backend && npm run test-dashboard",
+    "test-backend": "cd backend && npm test",
+    "test-dashboard": "cd dashboard && npm test",
+    "lint": "npm run lint-backend && npm run lint-dashboard",
+    "lint-backend": "cd backend && npm run lint",
+    "lint-dashboard": "cd dashboard && npm run lint",
+    "dev": "concurrently \"npm run start-backend\" \"npm run start-dashboard\"",
+    "setup": "npm run install-all && npm run setup-env",
+    "setup-env": "cp backend/.env.example backend/.env && echo 'Please configure your environment variables in backend/.env'",
+    "clean": "rm -rf node_modules backend/node_modules dashboard/node_modules",
+    "extension:build": "npm run extension:copy && npm run extension:zip",
+    "extension:copy": "mkdir -p dist && cp -r extension/* dist/",
+    "extension:zip": "cd dist && zip -r ../productivity-tracker-extension.zip .",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "deploy": "npm run build && npm run extension:build"
+  },
+  "keywords": [
+    "productivity",
+    "time-tracking",
+    "chrome-extension",
+    "website-blocking",
+    "focus-sessions",
+    "mern-stack",
+    "mongodb",
+    "express",
+    "react",
+    "nodejs"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/productivity-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/productivity-tracker/issues"
+  },
+  "homepage": "https://github.com/yourusername/productivity-tracker#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

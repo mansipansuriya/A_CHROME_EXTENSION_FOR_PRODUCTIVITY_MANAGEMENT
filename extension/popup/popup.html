@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productivity Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <span class="icon">📊</span>
+        <h1>Productivity Tracker</h1>
+      </div>
+      <div class="header-actions">
+        <button id="settings-btn" class="icon-btn" title="Settings">⚙️</button>
+        <button id="sync-btn" class="icon-btn" title="Sync Data">🔄</button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+      <div class="stat-card">
+        <div class="stat-value" id="today-time">0h 0m</div>
+        <div class="stat-label">Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="active-sites">0</div>
+        <div class="stat-label">Sites Visited</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="productivity-score">0%</div>
+        <div class="stat-label">Productivity</div>
+      </div>
+    </div>
+
+    <!-- Current Session -->
+    <div class="section">
+      <h3>Current Session</h3>
+      <div class="current-session">
+        <div class="session-info">
+          <div class="current-site" id="current-site">No active tab</div>
+          <div class="session-time" id="session-time">0:00</div>
+        </div>
+        <div class="session-controls">
+          <button id="focus-mode-btn" class="btn btn-primary">Start Focus Mode</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's Top Sites -->
+    <div class="section">
+      <h3>Today's Activity</h3>
+      <div class="top-sites" id="top-sites">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="section">
+      <h3>Category Breakdown</h3>
+      <div class="category-chart" id="category-chart">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section">
+      <h3>Quick Actions</h3>
+      <div class="quick-actions">
+        <button id="block-current-btn" class="btn btn-secondary">Block Current Site</button>
+        <button id="view-reports-btn" class="btn btn-secondary">View Reports</button>
+        <button id="export-data-btn" class="btn btn-secondary">Export Data</button>
+      </div>
+    </div>
+
+    <!-- Focus Mode Modal -->
+    <div id="focus-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Start Focus Session</h3>
+          <button id="close-focus-modal" class="close-btn">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="focus-duration">Duration (minutes):</label>
+            <select id="focus-duration">
+              <option value="15">15 minutes</option>
+              <option value="25" selected>25 minutes (Pomodoro)</option>
+              <option value="30">30 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60">1 hour</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="block-distracting" checked>
+              Block distracting sites during focus
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="show-timer">
+              Show timer on all pages
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="start-focus-btn" class="btn btn-primary">Start Focus Session</button>
+          <button id="cancel-focus-btn" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <button id="close-settings-modal" class="close-btn">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="tracking-enabled" checked>
+              Enable time tracking
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="blocking-enabled" checked>
+              Enable site blocking
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="sync-enabled" checked>
+              Sync data with backend
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="api-endpoint">API Endpoint:</label>
+            <input type="url" id="api-endpoint" placeholder="http://localhost:5000/api">
+          </div>
+          <div class="form-group">
+            <label for="idle-threshold">Idle threshold (seconds):</label>
+            <input type="number" id="idle-threshold" value="30" min="10" max="300">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="save-settings-btn" class="btn btn-primary">Save Settings</button>
+          <button id="cancel-settings-btn" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading...</div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

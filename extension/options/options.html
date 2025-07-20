@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productivity Tracker - Settings & Reports</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <span class="icon">📊</span>
+          <h1>Productivity Tracker</h1>
+        </div>
+        <div class="header-actions">
+          <button id="export-btn" class="btn btn-secondary">Export Data</button>
+          <button id="sync-btn" class="btn btn-primary">Sync Now</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
+      <button class="nav-tab" data-tab="reports">Reports</button>
+      <button class="nav-tab" data-tab="blocked-sites">Blocked Sites</button>
+      <button class="nav-tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboard-tab" class="tab-content active">
+      <div class="dashboard-grid">
+        <!-- Overview Cards -->
+        <div class="card overview-card">
+          <h3>Today's Overview</h3>
+          <div class="overview-stats">
+            <div class="stat">
+              <div class="stat-value" id="total-time-today">0h 0m</div>
+              <div class="stat-label">Total Time</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="sites-visited-today">0</div>
+              <div class="stat-label">Sites Visited</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="productivity-score-today">0%</div>
+              <div class="stat-label">Productivity Score</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" id="focus-sessions-today">0</div>
+              <div class="stat-label">Focus Sessions</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Chart -->
+        <div class="card chart-card">
+          <h3>Weekly Activity</h3>
+          <div class="chart-container">
+            <canvas id="weekly-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- Top Sites -->
+        <div class="card">
+          <h3>Top Sites Today</h3>
+          <div id="top-sites-list" class="sites-list">
+            <div class="loading">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Category Breakdown -->
+        <div class="card">
+          <h3>Category Breakdown</h3>
+          <div id="category-breakdown" class="category-list">
+            <div class="loading">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports Tab -->
+    <div id="reports-tab" class="tab-content">
+      <div class="reports-container">
+        <!-- Date Range Selector -->
+        <div class="card">
+          <h3>Generate Report</h3>
+          <div class="date-range-selector">
+            <div class="form-group">
+              <label for="start-date">Start Date:</label>
+              <input type="date" id="start-date">
+            </div>
+            <div class="form-group">
+              <label for="end-date">End Date:</label>
+              <input type="date" id="end-date">
+            </div>
+            <button id="generate-report-btn" class="btn btn-primary">Generate Report</button>
+          </div>
+        </div>
+
+        <!-- Report Results -->
+        <div id="report-results" class="card hidden">
+          <h3>Report Results</h3>
+          <div class="report-content">
+            <div class="report-summary">
+              <div class="summary-stats">
+                <div class="summary-stat">
+                  <div class="summary-value" id="report-total-time">0h 0m</div>
+                  <div class="summary-label">Total Time</div>
+                </div>
+                <div class="summary-stat">
+                  <div class="summary-value" id="report-avg-daily">0h 0m</div>
+                  <div class="summary-label">Daily Average</div>
+                </div>
+                <div class="summary-stat">
+                  <div class="summary-value" id="report-most-productive">N/A</div>
+                  <div class="summary-label">Most Productive Day</div>
+                </div>
+                <div class="summary-stat">
+                  <div class="summary-value" id="report-avg-score">0%</div>
+                  <div class="summary-label">Avg Productivity</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="report-charts">
+              <div class="chart-section">
+                <h4>Daily Activity</h4>
+                <canvas id="daily-activity-chart" width="600" height="300"></canvas>
+              </div>
+              
+              <div class="chart-section">
+                <h4>Category Distribution</h4>
+                <canvas id="category-pie-chart" width="400" height="400"></canvas>
+              </div>
+            </div>
+
+            <div class="report-tables">
+              <div class="table-section">
+                <h4>Top Sites</h4>
+                <table id="top-sites-table" class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Site</th>
+                      <th>Category</th>
+                      <th>Time Spent</th>
+                      <th>Visits</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blocked Sites Tab -->
+    <div id="blocked-sites-tab" class="tab-content">
+      <div class="blocked-sites-container">
+        <div class="card">
+          <h3>Manage Blocked Sites</h3>
+          <div class="add-site-form">
+            <div class="form-group">
+              <label for="new-site-input">Add Site to Block:</label>
+              <div class="input-group">
+                <input type="text" id="new-site-input" placeholder="example.com">
+                <button id="add-site-btn" class="btn btn-primary">Add Site</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="blocked-sites-list">
+            <h4>Currently Blocked Sites</h4>
+            <div id="blocked-sites-container">
+              <div class="loading">Loading...</div>
+            </div>
+          </div>
+
+          <div class="preset-categories">
+            <h4>Quick Add Categories</h4>
+            <div class="category-buttons">
+              <button class="category-btn" data-category="social">Social Media</button>
+              <button class="category-btn" data-category="entertainment">Entertainment</button>
+              <button class="category-btn" data-category="news">News</button>
+              <button class="category-btn" data-category="shopping">Shopping</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settings-tab" class="tab-content">
+      <div class="settings-container">
+        <!-- General Settings -->
+        <div class="card">
+          <h3>General Settings</h3>
+          <div class="settings-group">
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="tracking-enabled">
+                <span class="checkmark"></span>
+                Enable Time Tracking
+              </label>
+              <p class="setting-description">Track time spent on websites</p>
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="blocking-enabled">
+                <span class="checkmark"></span>
+                Enable Site Blocking
+              </label>
+              <p class="setting-description">Block access to distracting websites</p>
+            </div>
+            
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="focus-notifications">
+                <span class="checkmark"></span>
+                Focus Session Notifications
+              </label>
+              <p class="setting-description">Show notifications during focus sessions</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sync Settings -->
+        <div class="card">
+          <h3>Data Sync</h3>
+          <div class="settings-group">
+            <div class="setting-item">
+              <label class="setting-label">
+                <input type="checkbox" id="sync-enabled">
+                <span class="checkmark"></span>
+                Enable Data Sync
+              </label>
+              <p class="setting-description">Sync data across devices using backend API</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="api-endpoint">API Endpoint:</label>
+              <input type="url" id="api-endpoint" placeholder="http://localhost:5000/api">
+            </div>
+            
+            <div class="form-group">
+              <label for="sync-interval">Sync Interval (minutes):</label>
+              <select id="sync-interval">
+                <option value="15">15 minutes</option>
+                <option value="30" selected>30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="120">2 hours</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tracking Settings -->
+        <div class="card">
+          <h3>Tracking Settings</h3>
+          <div class="settings-group">
+            <div class="form-group">
+              <label for="idle-threshold">Idle Threshold (seconds):</label>
+              <input type="number" id="idle-threshold" min="10" max="300" value="30">
+              <p class="setting-description">Time before considering user idle</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="min-visit-time">Minimum Visit Time (seconds):</label>
+              <input type="number" id="min-visit-time" min="1" max="60" value="5">
+              <p class="setting-description">Minimum time to record a site visit</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="card">
+          <h3>Data Management</h3>
+          <div class="settings-group">
+            <div class="data-actions">
+              <button id="clear-today-btn" class="btn btn-secondary">Clear Today's Data</button>
+              <button id="clear-week-btn" class="btn btn-secondary">Clear This Week</button>
+              <button id="clear-all-btn" class="btn btn-danger">Clear All Data</button>
+            </div>
+            <p class="setting-description">Warning: These actions cannot be undone</p>
+          </div>
+        </div>
+
+        <!-- Save Settings -->
+        <div class="settings-actions">
+          <button id="save-settings-btn" class="btn btn-primary">Save Settings</button>
+          <button id="reset-settings-btn" class="btn btn-secondary">Reset to Defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading...</div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
